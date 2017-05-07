@@ -19,6 +19,8 @@ namespace HearthMirror.Console
             }
             else
             {
+                System.Console.WriteLine("Missing argument: cli, help or method name.");
+                System.Environment.Exit(1);
                 return null;
             }
         }
@@ -26,6 +28,7 @@ namespace HearthMirror.Console
         private static void ExecuteCommand(string command, bool main)
         {
             object value = null;
+            var type = typeof(Reflection);
 
             switch (command)
             {
@@ -36,10 +39,23 @@ namespace HearthMirror.Console
                         ExecuteCommand(command, false);
                     }
                     break;
+                case "help":
+                    var methods = type.GetMethods();
+                    foreach (var method in methods)
+                    {
+                        System.Console.WriteLine($"Method: {method.Name}");
+                    }
+                    if (main)
+                    {
+                        System.Environment.Exit(0);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                    break;
                 default:
-                    var type = typeof(Reflection);
-                    var method = type.GetMethod(command);
-                    value = method?.Invoke(null, new object[0]);
+                    value = type.GetMethod(command)?.Invoke(null, new object[0]);
                     break;
             }
 
