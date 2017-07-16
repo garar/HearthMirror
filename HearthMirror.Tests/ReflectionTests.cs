@@ -153,7 +153,7 @@ namespace HearthMirror.Tests
 		[TestMethod]
 		public void Debug()
 		{
-			Reflection.DebugHelper();
+			//Reflection.DebugHelper();
 		}
 
 		[TestMethod]

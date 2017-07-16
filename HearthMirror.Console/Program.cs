@@ -1,4 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace HearthMirror.Console
 {
@@ -40,7 +43,7 @@ namespace HearthMirror.Console
                     }
                     break;
                 case "help":
-                    var methods = type.GetMethods();
+                    var methods = new List<MethodInfo>(type.GetMethods()).OrderBy(m => m.Name).ToList();
                     foreach (var method in methods)
                     {
                         System.Console.WriteLine($"Method: {method.Name}");
